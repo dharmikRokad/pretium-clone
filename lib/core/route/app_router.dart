@@ -8,7 +8,6 @@ import 'package:myapp/features/home/home_screen.dart';
 import 'package:myapp/features/on_boarding/on_boarding_screen.dart';
 import 'package:myapp/features/splash/splash_screen.dart';
 
-
 final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.splash.path,
   routes: [
@@ -25,12 +24,12 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.login.path,
       name: AppRoutes.login.name,
-      builder: (context, state) => const LoginScreen(),
+      builder: (context, state) => LoginScreen(),
     ),
     GoRoute(
       path: AppRoutes.signup.path,
       name: AppRoutes.signup.name,
-      builder: (context, state) => const RegisterScreen(),
+      builder: (context, state) => RegisterScreen(),
     ),
     GoRoute(
       path: AppRoutes.codeVerification.path,

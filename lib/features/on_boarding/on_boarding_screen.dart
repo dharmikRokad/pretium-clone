@@ -4,7 +4,7 @@ import 'package:myapp/core/app_colors.dart';
 import 'package:myapp/core/route/app_routes.dart';
 import 'package:myapp/core/widgets/app_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
-    show SmoothPageIndicator, WormEffect, ExpandingDotsEffect;
+    show SmoothPageIndicator, ExpandingDotsEffect;
 
 class OnBoardingScreen extends StatelessWidget {
   OnBoardingScreen({super.key});
@@ -15,14 +15,32 @@ class OnBoardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> onBoardData = [
+      {
+        'icon': Icons.credit_card,
+        "title": "Direct Pay",
+        "desc": "Pay with crypto acress africa effortlessely",
+      },
+      {
+        'icon': Icons.account_balance_wallet,
+        "title": "Accept Payments",
+        "desc": "Accept stablecoin payments hassle free",
+      },
+      {
+        'icon': Icons.receipt_long,
+        "title": "Pay Bills",
+        "desc": "Pay for utility services and earn rewards",
+      },
+    ];
+
     return ValueListenableBuilder(
       valueListenable: _currentIndexListenable,
       builder: (context, index, _) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: AppColors.white,
+            backgroundColor: AppColors.transparent,
             actions: [
-              if (index == 2)
+              if (index != 2)
                 TextButton(
                   onPressed: () {
                     _controller.animateToPage(
@@ -45,498 +63,40 @@ class OnBoardingScreen extends StatelessWidget {
                 child: PageView(
                   controller: _controller,
                   onPageChanged: (i) => _currentIndexListenable.value = i,
-                  children: [
-                    _buildOnBoardTile(
-                      context,
-                      Icons.credit_card,
-                      "Direct Pay",
-                      "Pay with crypto acress africa effortlessely",
-                    ),
-                    _buildOnBoardTile(
-                      context,
-                      Icons.credit_card,
-                      "Direct Pay",
-                      "Pay with crypto acress africa effortlessely",
-                    ),
-                    _buildOnBoardTile(
-                      context,
-                      Icons.receipt_long,
-                      "Pay Bills",
-                      "Pay for utility services and earn rewards",
-                    ),
-                  ],
+                  children:
+                      onBoardData
+                          .map(
+                            (e) => _buildOnBoardTile(
+                              context,
+                              e['icon'],
+                              e['title'],
+                              e['desc'],
+                            ),
+                          )
+                          .toList(),
                 ),
               ),
               SmoothPageIndicator(
                 controller: _controller,
-                count: 6,
-                effect: ExpandingDotsEffect(),
-                onDotClicked:
-                    (i) => _controller.animateToPage(
-                      i,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.decelerate,
-                    ),
+                count: onBoardData.length,
+                effect: ExpandingDotsEffect(
+                  activeDotColor: AppColors.primary,
+                  dotColor: AppColors.secondary,
+                ),
+                onDotClicked: (i) {
+                  _currentIndexListenable.value = i;
+                  _controller.animateToPage(
+                    i,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.decelerate,
+                  );
+                },
               ),
             ],
           ),
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           bottomNavigationBar: BottomAppBar(
+            color: AppColors.transparent,
             child: Padding(
               padding: EdgeInsets.all(10),
               child: AppButton(
@@ -560,24 +120,32 @@ class OnBoardingScreen extends StatelessWidget {
     );
   }
 
-  _buildOnBoardTile(
+  Widget _buildOnBoardTile(
     BuildContext context,
     IconData icon,
     String title,
     String subtitle,
   ) {
-    return Column(
-      spacing: 20,
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: AppColors.secondary,
-          child: Icon(icon, color: AppColors.primary),
-        ),
-        const SizedBox.shrink(),
-        Text(title, style: Theme.of(context).textTheme.titleLarge),
-        Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 20,
+        children: [
+          CircleAvatar(
+            radius: 50,
+            backgroundColor: AppColors.secondary,
+            child: Icon(icon, color: AppColors.primary, size: 50),
+          ),
+          const SizedBox.shrink(),
+          Text(title, style: Theme.of(context).textTheme.titleLarge),
+          Text(
+            subtitle,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: AppColors.black54),
+          ),
+        ],
+      ),
     );
   }
 }

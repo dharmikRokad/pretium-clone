@@ -34,7 +34,16 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primary,
-      body: Center(child: Image.asset(ImageAssets.i.logo)),
+      body: GestureDetector(
+        onTap: () {
+          context.goNamed(
+            SharedPrefs.i.isLoggedIn
+                ? AppRoutes.home.name
+                : AppRoutes.onborad.name,
+          );
+        },
+        child: Center(child: Image.asset(ImageAssets.i.logo)),
+      ),
     );
   }
 }
